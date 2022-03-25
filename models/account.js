@@ -6,10 +6,12 @@ module.exports = (sequelize, DataTypes) => {
   class Account extends Model {
     static associate(models) {
       Account.belongsTo(models.User, {
+        foreignKey: "UserID",
         as: "User",
       });
 
       Account.hasMany(models.Card, {
+        foreignKey: "AccountID",
         as: "Card",
       });
     }

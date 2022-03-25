@@ -1,12 +1,12 @@
 const db = require("../models");
 
 const addCard = async (req, res) => {
-  let { accountId, password, money } = req.body;
+  let { accountId, password, OwnerId } = req.body;
 
   const card = await db.Card.create({
     AccountId: accountId,
+    OwnerId: OwnerId,
     Password: password,
-    Money: money,
   });
 
   res.json(card);
@@ -19,10 +19,7 @@ const getCards = async (req, res) => {
         model: db.Account,
         as: "Account",
       },
-      {
-        model: db.User,
-        as: "User",
-      },
+      "User",
     ],
   });
 
@@ -38,10 +35,6 @@ const getCardByOwnerId = async (req, res) => {
       {
         model: db.Account,
         as: "Account",
-      },
-      {
-        model: db.User,
-        as: "User",
       },
     ],
   });

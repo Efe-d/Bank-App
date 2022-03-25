@@ -1,28 +1,36 @@
 "use strict";
 const { Model } = require("sequelize");
+const bcrypt = require("bcrypt");
 module.exports = (sequelize, DataTypes) => {
   class Card extends Model {
     static associate(models) {
-      Card.hasOne(models.Account, {
-        as: "Account",
+      Card.belongsTo(models.Account, {
         foreignKey: "AccountID",
+        as: "Account",
       });
 
       Card.belongsTo(models.User, {
+        foreignKey: "OwnerId",
         as: "User",
-        foreignKey: "UserID",
       });
+
     }
   }
   Card.init(
     {
-      AccountId: DataTypes.INTEGER,
+      AccountID: DataTypes.INTEGER,
       OwnerId: DataTypes.INTEGER,
       Password: DataTypes.STRING,
     },
     {
       sequelize,
       modelName: "Card",
+
+      hooks: {
+        beforeCreate(attributes, options) {
+          attributes.Password = bcrypt.hashSync(attributes.Password, 10);
+        },
+      },
     }
   );
   return Card;

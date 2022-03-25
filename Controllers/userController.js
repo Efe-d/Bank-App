@@ -15,7 +15,13 @@ const addUser = async (req, res) => {
 //get all users
 const getUsers = async (req, res) => {
   const users = await db.User.findAll({
-    include: ["Account"],
+    include: [
+      {
+        model: db.Account,
+        as: "Account",
+      },
+      "Card",
+    ],
   });
 
   res.json(users);

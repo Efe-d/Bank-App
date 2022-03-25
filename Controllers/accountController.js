@@ -5,7 +5,7 @@ const addAccount = async (req, res) => {
 
   const account = await db.Account.create({
     UserID: userId,
-    Password:password,
+    Password: password,
     Money: money,
   });
 
@@ -19,6 +19,7 @@ const getAccounts = async (req, res) => {
         model: db.User,
         as: "User",
       },
+      "Card",
     ],
   });
 
