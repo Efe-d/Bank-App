@@ -22,14 +22,13 @@ class authService {
   }
 
   async login(info) {
-    const match = await bcyrpt.compare(info.Password, user.password);
     if (user) {
-      const match = await bcyrpt.compare(info.password, user.password);
+      const match = await bcyrpt.compare(info.Password, user.Password);
       if (match) {
         const token = jwt.sign(
           {
             id: user.id,
-            CustomerId: user.customerid,
+            CustomerId: user.CustomerId,
           },
           this.secret,
           { expiresIn: "1h" }
@@ -40,12 +39,12 @@ class authService {
         });
       } else {
         res.status(401).json({
-          message: "Invalid password",
+          message: "Invalid credentials",
         });
       }
     } else {
       res.status(401).json({
-        message: "Invalid customerid",
+        message: "Invalid credentials",
       });
     }
   }
