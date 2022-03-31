@@ -4,7 +4,7 @@ const addCard = async (req, res) => {
   let { accountId, password, OwnerId } = req.body;
 
   const card = await db.Card.create({
-    AccountId: accountId,
+    AccountID: accountId,
     OwnerId: OwnerId,
     Password: password,
   });
@@ -55,7 +55,7 @@ const CardDelete = async (req, res) => {
 const Cardupdate = async (req, res) => {
   const card = await db.Card.update(
     {
-      AccountId: req.body.accountId,
+      AccountID: req.body.accountId,
       Password: req.body.password,
       Money: req.body.money,
     },

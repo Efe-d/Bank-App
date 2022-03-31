@@ -17,6 +17,12 @@ module.exports = {
       Age: {
         type: Sequelize.INTEGER
       },
+      CustomerId: {
+        type: Sequelize.INTEGER
+      },
+      Password: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -1,17 +1,24 @@
 const db = require("../models");
 
 const addUser = async (req, res) => {
-  let { name, surname, age } = req.body;
+  let { name, surname, age, password } = req.body;
 
   const user = await db.User.create({
     Name: name,
     Surname: surname,
     Age: age,
+    CustomerId: Math.floor(Math.random() * 100000),
+    Password:password
   });
+
+  //if customerid exist in db generate new customerid
+  if (user.CustomerId) {
+    user.CustomerId = Math.floor(Math.random() * 100000);
+    user.save();
+  }
 
   res.json(user);
 };
-
 //get all users
 const getUsers = async (req, res) => {
   const users = await db.User.findAll({
@@ -51,12 +58,22 @@ const deleteUser = async (req, res) => {
     },
   });
 
-  res.json(user);
+  res.json("User Deleted " + user);
+};
+
+const deleteAllUsers = async (req, res) => {
+  const user = await db.User.destroy({
+    where: {},
+    truncate: true,
+  });
+
+  res.json("All Users Deleted " + user);
 };
 
 module.exports = {
   addUser,
   getUsers,
+  deleteAllUsers,
   updateUser,
   deleteUser,
 };
